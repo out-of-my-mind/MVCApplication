@@ -1,4 +1,5 @@
 //HTML辅助方法默认编码
+`
 @Html.TextBox("Title",Model.Title)
 <input id="Title" name="Title" type="text" value="This is Model.Title Context"/>
 
@@ -6,7 +7,7 @@
 <textarea cols="20" id="text" name="text" rows="2">hello &lt;br /&gt; world</textarea>
 @Html.TextArea("text","hello <br /> world",10,80,null)
 <textarea clos="80" id="text" name="text" rows="10">hello &lt;br /&gt; world</textarea>
-
+`
 @Html.Label("GenreId")
 <label for="GenreId">Genre</label>
 label标签的作用为其他输入元素显示附加信息。for属性是其他输入元素的ID。
