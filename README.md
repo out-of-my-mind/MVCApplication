@@ -1,43 +1,47 @@
-HTML辅助方法默认编码  
 - [表单元素](#form)
 - [超链接](#link)
 - [渲染](#action)
 - [验证注解](#valid)
 - [模型验证](#modelstate)
+-----------
 <div id="form">
 
 ### 表单元素
+* HTML辅助方法默认编码
 ```
 @Html.TextBox("Title",Model.Title)  
 <input id="Title" name="Title" type="text" value="This is Model.Title Context"/>  
-
-@Html.TextArea("text","<hello <br /> world")//HTML辅助方法默认编码    
+```
+```
+@Html.TextArea("text","<hello <br /> world")//HTML辅助方法默认编码   
 <textarea cols="20" id="text" name="text" rows="2">hello &lt;br /&gt; world</textarea>  
 @Html.TextArea("text","hello <br /> world",10,80,null)  
 <textarea clos="80" id="text" name="text" rows="10">hello &lt;br /&gt; world</textarea>  
-
+```
+```
 @Html.Label("GenreId")  
 <label for="GenreId">Genre</label>//label标签的作用为其他输入元素显示附加信息。for属性是其他输入元素的ID。  
-
+```
+```
 @Html.Hidden("wizardStep","1")   
 <input id="wizardStep" name="wizardStep" type="hidden" value="1" />  
 强辅助方法为@Html.HiddenFor(m => m.WizardStep)  
-
+```
+```
 @Html.Password("UserPassword")   
 <input id="UserPassword" name="UserPassword" type="password" value="" />  
-
+```
+```
 @Html.RadioButton("color","red")  
 @Html.RadioButton("color","blue",true)  
-@Html.RadioButton("color","green")  
 生成如下  
 <input id="color" name="color" type="radio" value="red" />  
-<input id="color" name="color" type="radio" value="blue" checked="checked" />  
-<input id="color" name="color" type="radio" value="green" />  
+<input id="color" name="color" type="radio" value="blue" checked="checked" />   
 对应的强类型方法如下  
 @Html.RadioButtonFor(m => m.color,"red")  
-@Html.RadioButtonFor(m => m.color,"blue",true)  
-@Html.RadioButtonFor(m => m.color,"green",true)  
-
+@Html.RadioButtonFor(m => m.color,"blue",true)   
+```
+```
 @Html.CheckBox("IsDiscounted")  
 生成如下代码  
 <input id="IsDiscounted" name="IsDiscounted" type="checkbox" value="true" />  
@@ -51,7 +55,8 @@ HTML辅助方法默认编码
 ActionLink辅助方法能够渲染一个超链接，可以指向另一个控制器操作。该方法在后台使用路由API来生成URL    
 ``` @Html.ActionLink("Link Text","AnotherAction")```  
 假设是在Home路径中，会生成如下HTML  
-``` <a href="/home/AnotherAction">LinkText</a> ```   
+``` <a href="/home/AnotherAction">LinkText</a> ```  
+
 当需要只向不同的控制操作的链接时，通过第三个参数指向。例如链接到ShoppingCartController控制器的Index操作 
 ``` @Html.ActionLink("Link Text","Index","ShoppingCart")```  
 当需要传递参数的时候，可以使用以下两种方法  
@@ -72,7 +77,10 @@ URL辅助方法是以字符串的形式返回URL。有三种辅助方法：Actio
 Partial辅助方法用于将视图渲染成字符串。(不需要指定路径、文件名)  
 ``` @Html.partial("AlbumDisplay")```  
 RenderPartial辅助方法是直接写入响应输出流，出于这个原因必须把RenderPartial放入代码块中，而不能放入代码表达式中。下面两行向输出流写入相同的内容  
-``` @{Html.RenderPartial("AlbumDisplay");}//性能较好，因为直接写入响应流，这种优势在高流量中明显  @Html.Partial("AlbumDisplay") ```  
+```
+@{Html.RenderPartial("AlbumDisplay");}//性能较好，因为直接写入响应流，这种优势在高流量中明显
+@Html.Partial("AlbumDisplay") 
+```  
 
 Action辅助方法执行单独的控制器操作显示结果，Partial辅助方法通常在单独的文件中应用视图标记来渲染。  
 ``` 
@@ -84,9 +92,9 @@ public ActionResult Menu(int id){
 --------部分视图如下  
 @model Menu  
 <ul>  
-@foreach(var item in Model.MenuItem){  
-    <li>@item.Text</li>  
-}  
+    @foreach(var item in Model.MenuItem){  
+        <li>@item.Text</li>  
+    }  
 </ul>  
 --------调用控制器操作如下//调用操作来显示内容  
 <html>  
@@ -318,7 +326,7 @@ public string LastName{ get;set;}
 
 <div id="modelstate">
 
-#### 模型验证
+### 模型验证
 默认情况下，会在模型绑定的时候执行验证逻辑  
 ```
 [HttpPost]
