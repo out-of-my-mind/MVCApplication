@@ -1,131 +1,130 @@
-//HTML辅助方法默认编码
-`
-@Html.TextBox("Title",Model.Title)
-<input id="Title" name="Title" type="text" value="This is Model.Title Context"/>
+**HTML辅助方法默认编码**  
+@Html.TextBox("Title",Model.Title)  
+<input id="Title" name="Title" type="text" value="This is Model.Title Context"/>  
 
-@Html.TextArea("text","<hello <br /> world")
-<textarea cols="20" id="text" name="text" rows="2">hello &lt;br /&gt; world</textarea>
-@Html.TextArea("text","hello <br /> world",10,80,null)
-<textarea clos="80" id="text" name="text" rows="10">hello &lt;br /&gt; world</textarea>
-`
-@Html.Label("GenreId")
-<label for="GenreId">Genre</label>
-label标签的作用为其他输入元素显示附加信息。for属性是其他输入元素的ID。
+@Html.TextArea("text","<hello <br /> world")  
+<textarea cols="20" id="text" name="text" rows="2">hello &lt;br /&gt; world</textarea>  
+@Html.TextArea("text","hello <br /> world",10,80,null)  
+<textarea clos="80" id="text" name="text" rows="10">hello &lt;br /&gt; world</textarea>  
 
-@Html.Hidden("wizardStep","1")
-会生成如下代码
-<input id="wizardStep" name="wizardStep" type="hidden" value="1" />
-强辅助方法为@Html.HiddenFor(m => m.WizardStep)
+@Html.Label("GenreId")  
+<label for="GenreId">Genre</label>  
+label标签的作用为其他输入元素显示附加信息。for属性是其他输入元素的ID。  
 
-@Html.Password("UserPassword")
-会生成如下代码
-<input id="UserPassword" name="UserPassword" type="password" value="" />
+@Html.Hidden("wizardStep","1")  
+会生成如下代码  
+<input id="wizardStep" name="wizardStep" type="hidden" value="1" />  
+强辅助方法为@Html.HiddenFor(m => m.WizardStep)  
 
-@Html.RadioButton("color","red")
-@Html.RadioButton("color","blue",true)
-@Html.RadioButton("color","green")
-生成如下
-<input id="color" name="color" type="radio" value="red" />
-<input id="color" name="color" type="radio" value="blue" checked="checked" />
-<input id="color" name="color" type="radio" value="green" />
-对应的强类型方法如下
-@Html.RadioButtonFor(m => m.color,"red")
-@Html.RadioButtonFor(m => m.color,"blue",true)
-@Html.RadioButtonFor(m => m.color,"green",true)
+@Html.Password("UserPassword")  
+会生成如下代码  
+<input id="UserPassword" name="UserPassword" type="password" value="" />  
 
-@Html.CheckBox("IsDiscounted")
-生成如下代码
-<input id="IsDiscounted" name="IsDiscounted" type="checkbox" value="true" />
-<input name="IsDiscounted" type="hidden" value="false" />
-渲染两个输入元素是因为，HTML规范中规定浏览器只会提交"开"(选中的复选框的值)，隐藏的输入元素保证了IsDiscounted有一个值会被提交，即使用户没有选择这个复选框
+@Html.RadioButton("color","red")  
+@Html.RadioButton("color","blue",true)  
+@Html.RadioButton("color","green")  
+生成如下  
+<input id="color" name="color" type="radio" value="red" />  
+<input id="color" name="color" type="radio" value="blue" checked="checked" />  
+<input id="color" name="color" type="radio" value="green" />  
+对应的强类型方法如下  
+@Html.RadioButtonFor(m => m.color,"red")  
+@Html.RadioButtonFor(m => m.color,"blue",true)  
+@Html.RadioButtonFor(m => m.color,"green",true)  
 
----超链接-------------------------
-ActionLink辅助方法能够渲染一个超链接，可以指向另一个控制器操作。该方法在后台使用路由API来生成URL
-@Html.ActionLink("Link Text","AnotherAction")
-假设是在Home路径中，会生成如下HTML
-<a href="/home/AnotherAction">LinkText</a>
-当需要只向不同的控制操作的链接时，通过第三个参数指向。例如链接到ShoppingCartController控制器的Index操作
-@Html.ActionLink("Link Text","Index","ShoppingCart")
-当需要传递参数的时候，可以使用以下两种方法
-@Html.ActionLink("Link Text","Edit","StoreManager",new {id=123},null)//最后一个参数是HTML元素属性(必带)
-@Html.RouteLink("Link Text",new {action="AnotherAction"})//只可以接受路由名称，而不能接收控制器名称和操作名称。这种写法和@Html.ActionLink("Linkl Text","AnotherAction")效果一样
+@Html.CheckBox("IsDiscounted")  
+生成如下代码  
+<input id="IsDiscounted" name="IsDiscounted" type="checkbox" value="true" />  
+<input name="IsDiscounted" type="hidden" value="false" />  
+渲染两个输入元素是因为，HTML规范中规定浏览器只会提交"开"(选中的复选框的值)，隐藏的输入元素保证了IsDiscounted有一个值会被提交，即使用户没有选择这个复选框  
 
-URL辅助方法是以字符串的形式返回URL。有三种辅助方法：Action、Content、RouteUrl
-@Url.Action("Browse","Store",new {genre="Jazz"},null)
-生成如下HTML标记
-/Store/Browse?genre=Jazz
-@Url.Content可以把相对路径转换成绝对路径
-<script src="~/Script/jqurey-1.10.2.min.js" type="text/javascripr"></script>
----end------------------------
+---超链接-------------------------  
+ActionLink辅助方法能够渲染一个超链接，可以指向另一个控制器操作。该方法在后台使用路由API来生成URL  
+@Html.ActionLink("Link Text","AnotherAction")  
+假设是在Home路径中，会生成如下HTML  
+<a href="/home/AnotherAction">LinkText</a>  
+当需要只向不同的控制操作的链接时，通过第三个参数指向。例如链接到ShoppingCartController控制器的Index操作  
+@Html.ActionLink("Link Text","Index","ShoppingCart")  
+当需要传递参数的时候，可以使用以下两种方法  
+@Html.ActionLink("Link Text","Edit","StoreManager",new {id=123},null)//最后一个参数是HTML元素属性(必带)  
+@Html.RouteLink("Link Text",new {action="AnotherAction"})//只可以接受路由名称，而不能接收控制器名称和操作名称。这种写法和@Html.ActionLink("Linkl Text","AnotherAction")效果一样  
 
-Partial辅助方法用于将视图渲染成字符串。(不需要指定路径、文件名)
-@Html.partial("AlbumDisplay")
-RenderPartial辅助方法是直接写入响应输出流，出于这个原因必须把RenderPartial放入代码块中，而不能放入代码表达式中。下面两行向输出流写入相同的内容
-@{Html.RenderPartial("AlbumDisplay");}//性能较好，因为直接写入响应流，这种优势要在高流量中明显
-@Html.Partial("AlbumDisplay")
+URL辅助方法是以字符串的形式返回URL。有三种辅助方法：Action、Content、RouteUrl  
+@Url.Action("Browse","Store",new {genre="Jazz"},null)  
+生成如下HTML标记  
+/Store/Browse?genre=Jazz  
+@Url.Content可以把相对路径转换成绝对路径  
+<script src="~/Script/jqurey-1.10.2.min.js" type="text/javascripr"></script>  
+---end------------------------  
 
-Action辅助方法执行单独的控制器操作显示结果，Partial辅助方法通常在单独的文件中应用视图标记来渲染。
-[ChildActionOnly]//这个特性避免了通过URL来调用操作。相反只能通过Action和RenderAction使用
-public ActionResult Menu(int id){
-    var menu = GetMenuFormSomewhere();
-    return PartialView(menu);
-}
---------部分视图如下
-@model Menu
-<ul>
-@foreach(var item in Model.MenuItem){
-    <li>@item.Text</li>
-}
-</ul>
------------调用控制器操作如下//调用操作来显示内容
-<html>
-<head><title></title></head>
-<body>
-    @Html.Action("Menu")
-</body>
-</html>
-当通过Action或RenderAction调用操作时ControllerContext上的属性IsChildAction值就为true，通过URL调用值为false
-@Html.Action("Menu",new { options = new MenuOption{ width=400,higth=500}})//传递了一个MenuOption对象
+Partial辅助方法用于将视图渲染成字符串。(不需要指定路径、文件名)  
+@Html.partial("AlbumDisplay")  
+RenderPartial辅助方法是直接写入响应输出流，出于这个原因必须把RenderPartial放入代码块中，而不能放入代码表达式中。下面两行向输出流写入相同的内容  
+@{Html.RenderPartial("AlbumDisplay");}//性能较好，因为直接写入响应流，这种优势要在高流量中明显  
+@Html.Partial("AlbumDisplay")  
 
-RenderAction方法优先使用ActionName特性值作为调用的操作，下面当调用RenderAction方法是要确保操作名称使用的是CoolMenu
-[ActionName("CoolMenu")]
-public ActionResult Menu()
-{
-    return PartialView();
-}
----end-----------------
+Action辅助方法执行单独的控制器操作显示结果，Partial辅助方法通常在单独的文件中应用视图标记来渲染。  
+[ChildActionOnly]//这个特性避免了通过URL来调用操作。相反只能通过Action和RenderAction使用  
+public ActionResult Menu(int id){  
+    var menu = GetMenuFormSomewhere();  
+    return PartialView(menu);  
+}  
+--------部分视图如下  
+@model Menu  
+<ul>  
+@foreach(var item in Model.MenuItem){  
+    <li>@item.Text</li>  
+}  
+</ul>  
+-----------调用控制器操作如下//调用操作来显示内容  
+<html>  
+<head><title></title></head>  
+<body>   
+    @Html.Action("Menu")  
+</body>  
+</html>  
+当通过Action或RenderAction调用操作时ControllerContext上的属性IsChildAction值就为true，通过URL调用值为false  
+@Html.Action("Menu",new { options = new MenuOption{ width=400,higth=500}})//传递了一个MenuOption对象  
 
-public ActionResult Edit(int id)
-{
-    var album = db.Albums.Single(a => a.AlbumId == id);
-    ViewBag.Genres = new SelectList(db.Genres.OrderBy(g => g.Name),"GenreId","Name",album.GenreId);
-    return View(album);
-}
-如果要避免反射开销的同时要自己生成SelectListItem集合，可以使用LINQ的Select方法将SelectListItem对象放入项目Genres中
-public ActionResult Enid(int id)
-{
-    var album = db.Albums.Single(a => a.AlbumId == id);
-    ViewBag.Genres = db.Genres.OrderBy(g => g.Name).AsEnumerable().Select(g => new SelectListItem{
-        Text = g.Name,
-        Value = g.GenreId.ToString(),
-        Selected = album.GenreId == g.GenreId
-    });
-    return View(album);
-}
+RenderAction方法优先使用ActionName特性值作为调用的操作，下面当调用RenderAction方法是要确保操作名称使用的是CoolMenu  
+[ActionName("CoolMenu")]  
+public ActionResult Menu()   
+{  
+    return PartialView();  
+}  
+---end-----------------  
 
-[httpPost]
-public ActionResult Edit(int id,FormCollection collection)
-{
-    var album = db.Albums.Find(id);
+public ActionResult Edit(int id)  
+{  
+    var album = db.Albums.Single(a => a.AlbumId == id);  
+    ViewBag.Genres = new SelectList(db.Genres.OrderBy(g => g.Name),"GenreId","Name",  album.GenreId);  
+    return View(album);  
+}  
+如果要避免反射开销的同时要自己生成SelectListItem集合，可以使用LINQ的Select方法将SelectListItem对象放入项目Genres中  
+public ActionResult Enid(int id)  
+{  
+    var album = db.Albums.Single(a => a.AlbumId == id);  
+    ViewBag.Genres = db.Genres.OrderBy(g => g.Name).AsEnumerable().Select(g => new SelectListItem{  
+        Text = g.Name,  
+        Value = g.GenreId.ToString(),   
+        Selected = album.GenreId == g.GenreId  
+    });  
+    return View(album);  
+}  
+  
+[httpPost]  
+public ActionResult Edit(int id,FormCollection collection)  
+{  
+    var album = db.Albums.Find(id);  
     ModelState.AddModelError("Title","What a terrible name!");
-    return View(album);
-}
-在视图中可以用下行代码显示错误提示消息
-@Html.ValidationMessage("Title")
-生成的HTML标记如下：
+    return View(album);  
+}  
+在视图中可以用下行代码显示错误提示消息  
+@Html.ValidationMessage("Title")  
+生成的HTML标记如下：  
 <span class="field-validation-error" data-valmsg-for="Title" data-valmsg-replace="false">
-    What a terrible name!
-</span>
+    What a terrible name!  
+</span>  
 
 public ActionResult Edit(int id)
 {
