@@ -1,0 +1,66 @@
+﻿@using MVCApplication.Models
+@model IEnumerable<MVCMovie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>在 Migrations 文件夹下创建一个Configuration.cs 文件</p>
+<p>Enable-Migrations -ContextTypeName MvcMovie.Models.MovieDBContext</p>
+<br />
+<p>创建初始迁移。 " Initial"的名称是任意，是用于创建迁移文件的名称</p>
+<p>add-migration Initial </p>
+<br />
+<p>创建数据库并运行 Seed 方法</p>
+<p>update-database</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "MVCMovies/Index", FormMethod.Get)) {
+        <p>
+            Title:@Html.TextBox("SearchString")<br />
+            <input type="submit" value="Filter">
+        </p>
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

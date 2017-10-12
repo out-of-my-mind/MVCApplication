@@ -1,0 +1,35 @@
+﻿@{
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "About";
+    string message = "<script>alert('324');</script>";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@section fcdom{
+    this is the fcdom
+}
+
+@* <span>@Html.Raw(message)</span>*@   // 如果想展示html效果，需返回一个System.Web.IHtmlString对象
+<br />
+<span>@message  // &lt;   自动编码，默认不会识别html标记</span>
+
+<p>Use this area to provide additional information.</p>
+
+
+<p id="msg"></p>
+<script>
+    var msg = "Hello @Ajax.JavaScriptStringEncode(@message)";//对显示用户输入进行处理
+    document.getElementById("msg").innerHTML = msg;
+</script>
+
+
+<div id="result"></div>
+@section scripts{
+    <script type="text/javascript">
+        #(function(){
+            $('#result').load('/home/about');
+        });
+    </script>    
+}
+@* 使用jQuery的load方法向about操作方法发送一个ajax请求，而后使用请求的结果更新div元素 *@

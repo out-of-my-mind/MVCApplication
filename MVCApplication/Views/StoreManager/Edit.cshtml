@@ -1,0 +1,99 @@
+﻿@model MVCApplication.Models.Album
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@*
+    //class是C#的保留关键字不能直接使用
+    //框架的Ajax特性，带有连字符( - )的C#属性名是无效的。在HTML辅助方法中会将属性名中的下划线( _ )转化为连字符( - )
+     @using(Html.BeginForm("Search","Home",FormMethod.Get,new {target="_blank", @class="editform",data_id=true})){
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+     }
+
+     BeginForm HTML辅助方法利用路由引擎找到  控制器  的对应  操作，在后台使用GetVirtualPath方法。这个方法在RouteTable的Routes属性中--global.asax中
+     如果不采用BeginForm HTML辅助方法，将不得不使用下面代码
+     @{
+        var context = this.ViewContext.RequestContext;
+        var values = new RouteValueDictionary{
+            {"controller","home"},{"action","index"}
+        };
+        var path = RouteTable.Routes.GetVirtualPath(context,values);
+     }
+     <form action="@path.VirtualPath" nethod="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search2" />
+     </form>
+*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Album</h4>
+        <hr />
+        @* 
+            ValidationSummary辅助方法可以用来在页面上显示ModelState字典中所有验证错误的无序列表。可以排除具体模型属性相关错误
+                  true:模型错误、false:所有错误
+                  错误提示的标题
+                  HTML属性设置 
+        *@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.AlbumId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GenreId, "GenreId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GenreId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GenreId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArtistId, "ArtistId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ArtistId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ArtistId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AlbumArtUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AlbumArtUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AlbumArtUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
