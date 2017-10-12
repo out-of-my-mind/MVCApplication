@@ -1,0 +1,13 @@
+
+*.pdf
+*.nupkg
+*.dll
+packages/Antlr.3.4.1.9004/lib/Antlr3.Runtime.pdb
+packages/bootstrap.3.0.0/content/Content/bootstrap.css
+packages/bootstrap.3.0.0/content/Content/bootstrap.min.css
+packages/bootstrap.3.0.0/content/Content/bootstrap.min.css
+packages/bootstrap.3.0.0/content/fonts/glyphicons-halflings-regular.eot
+packages/bootstrap.3.0.0/content/fonts/glyphicons-halflings-regular.eot
+packages/bootstrap.3.0.0/content/fonts/glyphicons-halflings-regular.svg
+packages/bootstrap.3.0.0/content/fonts/glyphicons-halflings-regular.svg
+packages/bootstrap.3.0.0/content/fonts/glyphicons-halflings-regular.ttf

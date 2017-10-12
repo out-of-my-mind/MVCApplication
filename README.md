@@ -361,4 +361,5 @@ public class Order : IValidatableObject
         }
     }
 }
+上面的代码使用了C#的yield return语法来构建枚举返回值，同时还需要显式地告知ValidationResult与其关联的字段名称
 使用自验证这种方式，当执行验证而调用的方法是Validate而不是IsValid，而且返回的类型是IEnumerable<ValidationResult>而不是单独的ValidationResult
