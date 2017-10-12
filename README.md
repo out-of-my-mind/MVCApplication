@@ -130,19 +130,19 @@ public ActionResult Edit(int id)
 {
     ViewBag.Price = 10.0;// new Album{Price = 11};
     return View();
-}
-在相应的视图中，使用ViewBag中的值来辅助TextBox:
-@Html.TextBox("Price"); //@Html.TextBox("Album.Price")  辅助方法只能查看ViewData的对象属性
-生成的HTML如下
-<input id="Price" name="Price" type="text" value="10" />//<input id="Album_Price" name="Album.Price" type="text" value="11"/> 如果在ViewData中没有匹配到"Album.Price"，那么将尝试的查找Album类型的对象，再找到对应的属性Price
-在Id特性中包含点"."是非法的，运行时用静态方法HtmlHelper.IdAttributeDotReplacement的值代替了点
+}  
+在相应的视图中，使用ViewBag中的值来辅助TextBox:  
+@Html.TextBox("Price"); //@Html.TextBox("Album.Price")  辅助方法只能查看ViewData的对象属性  
+生成的HTML如下  
+<input id="Price" name="Price" type="text" value="10" />//<input id="Album_Price" name="Album.Price" type="text" value="11"/> 如果在ViewData中没有匹配到"Album.Price"，那么将尝试的查找Album类型的对象，再找到对应的属性Price  
+在Id特性中包含点"."是非法的，运行时用静态方法HtmlHelper.IdAttributeDotReplacement的值代替了点  
 
-TextBox辅助方法依靠强类型试图数据
-public ActionResult Edit(int id)
-{
-    var ablum = new Album{Price = 12.0m};
-    return View(album);
-}
+TextBox辅助方法依靠强类型试图数据  
+public ActionResult Edit(int id)  
+{  
+    var ablum = new Album{Price = 12.0m};  
+    return View(album);  
+} 
 在视图中，可以直接使用方法提供的属性来显示信息
 @Html.textBox("Price");
 生成的HTML标记如下
@@ -241,48 +241,48 @@ public JsonResult CheckUserName(string username)
     return Json(result,JsonRequestBehavior.AllowGet);
 }
 
-自定义错误文字信息
-[RegularExpression(@"[A-Za-z0-9._+-]+@[A-Za-z0-9._]+\.[A-Za-z]{2,4}",ErrorMessage="Email doesn't look like a valid email address.")]
-public string Email{ get;set;}
-ErrorMessage是每个验证特性中用来自定义错误信息的参数名称
-[Required(ErrorMessage="Your last name is required")]
-此外还可以使用格式项{0}的格式:
-[Required(ErrorMessage="Your {0} is required"]//格式项会自动填充元数据属性名LastName
-public string LastName{ get;set;}
-假设应用程序是面向国际市场开发，错误提示需要为不同的地区显示不同的文本内容。这时候就需要提供本地化的错误提示指定资源类型名称和资源名称
-[Required(ErrorMessageResourceType=typeof(ErrorMessages),ErrorMessageResourceName="LastNameRequired")]
-上面代码假设有一个ErrorMessages.resx的资源文件，其中包含LastNameRequured条目。
-在ASP.NET中，想要本地化资源文件，需要将当前线程的UICultrue属性设置为地域语言
+自定义错误文字信息  
+[RegularExpression(@"[A-Za-z0-9._+-]+@[A-Za-z0-9._]+\.[A-Za-z]{2,4}",ErrorMessage="Email doesn't look like a valid email address.")]  
+public string Email{ get;set;}  
+ErrorMessage是每个验证特性中用来自定义错误信息的参数名称  
+[Required(ErrorMessage="Your last name is required")]  
+此外还可以使用格式项{0}的格式:  
+[Required(ErrorMessage="Your {0} is required"]//格式项会自动填充元数据属性名LastName  
+public string LastName{ get;set;}  
+假设应用程序是面向国际市场开发，错误提示需要为不同的地区显示不同的文本内容。这时候就需要提供本地化的错误提示指定资源类型名称和资源名称  
+[Required(ErrorMessageResourceType=typeof(ErrorMessages),ErrorMessageResourceName="LastNameRequired")]  
+上面代码假设有一个ErrorMessages.resx的资源文件，其中包含LastNameRequured条目。  
+在ASP.NET中，想要本地化资源文件，需要将当前线程的UICultrue属性设置为地域语言  
 
-默认情况下，会在模型绑定的时候执行验证逻辑
-[HttpPost]
-public ActionResult Create(Album album){}//当操作方法带有参数的时候也会执行模型绑定
-也利用控制器的UpdateModel或TryUpdateModel显式地执行模型绑定
-模型绑定器一旦使用新值完成对模型属性的更新，就会利用当前的模型元数据获得模型的所有验证器。验证器与数据注解一同工作，会找到所有验证特性并执行验证逻辑。模型绑定器捕获所有失败的验证规则并放入模型状态中。
-模型绑定的主要副产品是模型状态(使用Controller派生类对象的ModelState属性可以访问到)。如果状态中存在错误ModelState.IsValid就返回false。
-例如，用户没有填写LastName，但LastName设置了Required验证注解，在模型绑定后，下面的表达式将返回验证结果
-ModelState.IsValid == false
-ModelState.IsValidField("LastName") == false
-ModelState["LastName"].Errors.Count > 0
-同时也可以得到失败验证的错误提示信息：
-ModelState["LastName"].Errors[0].ErrorMessage//通常很少编写代码那来查看特定的错误提示信息。HTML辅助方法
-@Html.ValidationMessageFor(m => m.LastName)
-
-[HttpPost]
+默认情况下，会在模型绑定的时候执行验证逻辑  
+[HttpPost]  
+public ActionResult Create(Album album){}//当操作方法带有参数的时候也会执行模型绑定  
+也利用控制器的UpdateModel或TryUpdateModel显式地执行模型绑定  
+模型绑定器一旦使用新值完成对模型属性的更新，就会利用当前的模型元数据获得模型的所有验证器。验证器与数据注解一同工作，会找到所有验证特性并执行验证逻辑。模型绑定器捕获所有失败的验证规则并放入模型状态中。  
+模型绑定的主要副产品是模型状态(使用Controller派生类对象的ModelState属性可以访问到)。如果状态中存在错误ModelState.IsValid就返回false。  
+例如，用户没有填写LastName，但LastName设置了Required验证注解，在模型绑定后，下面的表达式将返回验证结果  
+ModelState.IsValid == false  
+ModelState.IsValidField("LastName") == false  
+ModelState["LastName"].Errors.Count > 0  
+同时也可以得到失败验证的错误提示信息：  
+ModelState["LastName"].Errors[0].ErrorMessage//通常很少编写代码那来查看特定的错误提示信息。HTML辅助方法  
+@Html.ValidationMessageFor(m => m.LastName)  
+`
+[HttpPost]  
 public ActionResult AddressAndPayment(Order newOrder)
 {
-    if(ModelState.IsValid)
-    {
-        newOrder.Username = User.Identity.Name;
+    if(ModelState.IsValid)  
+    {  
+        newOrder.Username = User.Identity.Name;  
         newOrder.OrderDate = DateTime.Now;
         DB.Orders.Add(newOrder);
         DB.SaveChanges();
         return RedirectToAction("Complete",new {id=newOrder.OrderId});
     }
     return View(newOrder);
-}
-上面这段代码立即检查ModelState.IsValid标记。模型绑定器已经构建好一个Order类对象，并用请求中的值类填充它。当模型绑定器完成更新后，就会执行有关的验证规则。也可以通过显式地调用UpdateModel或TryUpdateModel来实现，如下
-[HttpPost]
+}  `  
+上面这段代码立即检查ModelState.IsValid标记。模型绑定器已经构建好一个Order类对象，并用请求中的值类填充它。当模型绑定器完成更新后，就会执行有关的验证规则。也可以通过显式地调用UpdateModel或TryUpdateModel来实现，如下  
+[HttpPost]  
 public ActionResult AddressAndPayment(FormCollection collection)
 {
     var newOrder = new Order();
@@ -296,9 +296,9 @@ public ActionResult AddressAndPayment(FormCollection collection)
         return RedirectToAction("Complete",new {id=newOrder.OrderId});
     }
     return View(newOrder);
-}
-----------
-[HttpPost]
+}  
+----------  
+[HttpPost]  
 public ActionResult AddressAndPayment(FormCollection collection)
 {
     var newOrder = new Order();
@@ -311,24 +311,24 @@ public ActionResult AddressAndPayment(FormCollection collection)
         return RedirectToAction("Complete",new {id=newOrder.OrderId});
     }
     return View(newOrder);
-}
+}  
 
-把验证逻辑封装在自定义数据注解中可以轻松地实现在多个模型中重用逻辑，这样需要在特性内部编写代码以应对不同类型的模型。
-另一方面，如果将验证逻辑直接放入模型对象中，就意味着验证逻辑可以很容易地实现，因为这样只需要关心一种模型对象的验证逻辑。但不利于逻辑重用
-所有的验证注解(如Required和Range)特性最终都派生自基类ValidationAttribute,它是个抽象类，在名称空间System.ComponentModel.DataAnnotations中定义。同样自定义的验证逻辑也必须派生自ValidatationAttribute的类
-using System.ComponentModel.DataAnnotation;
-namespace MvcMusicStore.Infrastructrue
+把验证逻辑封装在自定义数据注解中可以轻松地实现在多个模型中重用逻辑，这样需要在特性内部编写代码以应对不同类型的模型。  
+另一方面，如果将验证逻辑直接放入模型对象中，就意味着验证逻辑可以很容易地实现，因为这样只需要关心一种模型对象的验证逻辑。但不利于逻辑重用  
+所有的验证注解(如Required和Range)特性最终都派生自基类ValidationAttribute,它是个抽象类，在名称空间System.ComponentModel.DataAnnotations中定义。同样自定义的验证逻辑也必须派生自ValidatationAttribute的类  
+using System.ComponentModel.DataAnnotation;  
+namespace MvcMusicStore.Infrastructrue  
 {
     public class MaxWordsAttribute : ValidationAttribute
     {
-        private readonly int _maxWords;
-        //向构造函数传递一个默认的错误提示信息
+        private readonly int _maxWords;  
+        //向构造函数传递一个默认的错误提示信息  
         public MaxWordsAttribute(int maxWords) : base("{0} has too many words.")
         {
             _maxWords = maxWords;
-        }
-        //为了实现这个验证逻辑，至少需要重写基类中提供IsValid方法的其中一个版本
-        //第一个参数是要验证的对象，如果对象是有效的就返回一个成功的验证结果
+        }  
+        //为了实现这个验证逻辑，至少需要重写基类中提供IsValid方法的其中一个版本  
+        //第一个参数是要验证的对象，如果对象是有效的就返回一个成功的验证结果  
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if(value != null)
@@ -336,7 +336,7 @@ namespace MvcMusicStore.Infrastructrue
                 var valueAsString = value.ToString();
                 if(valueAsString.Split(' ').Length > _maxWords)
                 {
-                    //FormatErrorMessage方法会使用提供的属性名来填充占位符
+                    //FormatErrorMessage方法会使用提供的属性名来填充占位符  
                     var errorMessage = FormatErrorMessage(validationContext.DisplayName);
                     return new ValidationResult(errorMessage);
                 }
@@ -345,12 +345,12 @@ namespace MvcMusicStore.Infrastructrue
         }
     }
 }
-应用如下
-[MaxWords(10,ErrorMessage ="There are too many words")]
-public virtual string Title { set; get; }
+应用如下  
+[MaxWords(10,ErrorMessage ="There are too many words")]  
+public virtual string Title { set; get; }  
 
-IValidatableObject
-自验证(self-validating)模型是指一个知道如何验证自身的模型对象。通过实现IvalidableObject接口来对自身验证。
+IValidatableObject  
+自验证(self-validating)模型是指一个知道如何验证自身的模型对象。通过实现IvalidableObject接口来对自身验证。  
 public class Order : IValidatableObject
 {
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -361,5 +361,5 @@ public class Order : IValidatableObject
         }
     }
 }
-上面的代码使用了C#的yield return语法来构建枚举返回值，同时还需要显式地告知ValidationResult与其关联的字段名称
-使用自验证这种方式，当执行验证而调用的方法是Validate而不是IsValid，而且返回的类型是IEnumerable<ValidationResult>而不是单独的ValidationResult
+上面的代码使用了C#的yield return语法来构建枚举返回值，同时还需要显式地告知ValidationResult与其关联的字段名称  
+使用自验证这种方式，当执行验证而调用的方法是Validate而不是IsValid，而且返回的类型是IEnumerable<ValidationResult>而不是单独的ValidationResult  
